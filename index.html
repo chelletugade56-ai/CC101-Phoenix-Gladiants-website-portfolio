@@ -1,0 +1,1253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Phoenix Gladiants — Information Technology Student Portfolio</title>
+  <meta name="description" content="Portfolio of four Information Technology students: web development, data and security projects, skills and services.">
+  <meta name="theme-color" content="#000000">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Sora:wght@300;400;600;700&display=swap">
+  <link rel="stylesheet" href="style.css">
+
+
+  <style id="portfolio-extras">
+    /* ===== Resume popup (self-contained, works even with an old style.css) ===== */
+    .resume-modal{margin:auto;width:min(940px,94vw);height:min(90vh,1000px);max-width:none;max-height:none;padding:0;border:1px solid #e8b84a;border-radius:18px;background:#08070b;color:#f3efe6;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.7),0 0 40px rgba(232,184,74,.15)}
+    .resume-modal:not([open]){display:none}
+    .resume-modal[open]{display:flex;flex-direction:column}
+    .resume-modal::backdrop{background:rgba(8,7,11,.85);backdrop-filter:blur(6px)}
+    .resume-modal__bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.1);background:#100e16}
+    .resume-modal__title{flex:1 1 220px;margin:0;font:700 14px/1.3 'Space Mono',monospace;letter-spacing:.06em;color:#e8b84a}
+    .resume-modal__actions{display:flex;gap:10px;align-items:center}
+    .resume-modal__actions .btn{padding:11px 20px;line-height:1.2;text-decoration:none}
+    .resume-modal__frame{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch;background:#1a1a1d;padding:12px;text-align:center}
+    .resume-modal__frame img{display:inline-block;width:100%;max-width:820px;height:auto;background:#fff;box-shadow:0 10px 40px rgba(0,0,0,.5)}
+    .resume-modal__frame img[hidden],.resume-modal__err[hidden]{display:none}
+    .resume-modal__err{padding:40px 20px;font:400 13px/1.7 'Space Mono',monospace;color:#e8b84a}
+    .resume-modal__fallback{margin:0;padding:10px 18px;font:400 11px 'Space Mono',monospace;color:#9a95a8;border-top:1px solid rgba(255,255,255,.1);background:#100e16}
+    @media(max-width:560px){.resume-modal{width:100vw;height:100dvh;border-radius:0;border-width:0}.resume-modal__actions{width:100%}.resume-modal__actions .btn{flex:1;justify-content:center}}
+
+    /* ===== Profile photos (all four members): purple-ash at rest, gold glow + sparkles on touch ===== */
+    .member .member__photo img,
+    .profile .profile__photo img{
+      filter:grayscale(.85) contrast(1.05) brightness(.92);
+      transition:filter .6s,transform .8s;
+    }
+    /* purple-ash tint layer */
+    .member .member__photo::after,
+    .profile .profile__photo::after{
+      content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+      background:linear-gradient(160deg,rgba(139,108,255,.55),rgba(88,70,140,.5) 55%,rgba(120,112,135,.45));
+      mix-blend-mode:color;opacity:1;transition:opacity .6s;
+    }
+    /* gold sparkles layer */
+    .member .member__photo::before,
+    .profile .profile__photo::before{
+      content:"";position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .5s;
+      background:
+        radial-gradient(circle,#ffe9a8 0 1.6px,transparent 2.4px) 12% 18%/46px 46px,
+        radial-gradient(circle,#e8b84a 0 1.2px,transparent 2px) 63% 32%/58px 58px,
+        radial-gradient(circle,#fff3c4 0 1px,transparent 1.8px) 31% 71%/38px 38px,
+        radial-gradient(circle,#e8b84a 0 1.8px,transparent 2.6px) 84% 84%/66px 66px,
+        radial-gradient(circle,#ffe9a8 0 1.1px,transparent 1.9px) 48% 52%/52px 52px;
+      background-repeat:repeat;
+    }
+    .member:hover .member__photo img,.member__frame:focus-visible .member__photo img,.member__frame:active .member__photo img,
+    .profile__photo:hover img,.profile__photo:active img{
+      filter:none;transform:scale(1.05);
+    }
+    .member:hover .member__photo::after,.member__frame:focus-visible .member__photo::after,.member__frame:active .member__photo::after,
+    .profile__photo:hover::after,.profile__photo:active::after{opacity:0}
+    .member:hover .member__photo::before,.member__frame:focus-visible .member__photo::before,.member__frame:active .member__photo::before,
+    .profile__photo:hover::before,.profile__photo:active::before{
+      opacity:1;animation:sparkle 1.6s ease-in-out infinite alternate,sparkleDrift 6s linear infinite;
+    }
+    .member:hover .member__frame,.member__frame:focus-visible,.member__frame:active{
+      border-color:#e8b84a;box-shadow:0 0 0 1px rgba(232,184,74,.6),0 0 34px rgba(232,184,74,.45),0 0 80px rgba(232,184,74,.22);
+    }
+    .profile__photo:hover,.profile__photo:active{
+      box-shadow:0 0 0 1px rgba(232,184,74,.7),0 0 40px rgba(232,184,74,.5),0 0 90px rgba(232,184,74,.25);
+    }
+    .member__frame{box-shadow:0 0 0 1px rgba(139,108,255,.25),0 10px 40px rgba(139,108,255,.12)}
+    .profile__photo{box-shadow:0 0 0 1px rgba(139,108,255,.3),0 14px 50px rgba(139,108,255,.18)}
+    @keyframes sparkle{from{filter:brightness(.8) drop-shadow(0 0 2px #e8b84a)}to{filter:brightness(1.6) drop-shadow(0 0 6px #ffe9a8)}}
+    @keyframes sparkleDrift{from{background-position:12% 18%,63% 32%,31% 71%,84% 84%,48% 52%}to{background-position:12% 118%,63% 132%,31% 171%,84% 184%,48% 152%}}
+    /* keep the tint on phones too (old rule removed the effect on touch screens) */
+    @media(hover:none){.member .member__photo img,.profile .profile__photo img{filter:grayscale(.85) contrast(1.05) brightness(.92)}}
+  </style>
+</head>
+
+<body>
+  <header class="nav">
+    <div class="wrap nav__bar">
+      <a class="nav__logo" href="#home" aria-label="Team home">
+        <span class="nav__logo-mark" aria-hidden="true">IT</span>Coca-Cola<span class="nav__caret" aria-hidden="true"></span>
+      </a>
+      <input class="nav__toggle" type="checkbox" id="nav-toggle" aria-label="Toggle navigation menu">
+      <label class="nav__scrim" for="nav-toggle" aria-hidden="true"></label>
+      <label class="nav__burger" for="nav-toggle"><i></i><i></i><i></i><span class="sr-only">Menu</span></label>
+      <nav class="nav__panel" aria-label="Primary">
+        <ul class="nav__list">
+          <li>
+            <a class="nav__link" href="#home">
+              <span class="nav__swap"><span>Home</span><span aria-hidden="true">Home</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="nav__link" href="#about">
+              <span class="nav__swap"><span>About</span><span aria-hidden="true">About</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="nav__link" href="#skills">
+              <span class="nav__swap"><span>Skills</span><span aria-hidden="true">Skills</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="nav__link" href="#projects">
+              <span class="nav__swap"><span>Projects</span><span aria-hidden="true">Projects</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="nav__link" href="#services">
+              <span class="nav__swap"><span>Services</span><span aria-hidden="true">Services</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="nav__link" href="#contact">
+              <span class="nav__swap"><span>Contact</span><span aria-hidden="true">Contact</span></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="home">
+      <div class="bg-mesh" aria-hidden="true"></div>
+      <div class="grid-lines" aria-hidden="true"></div>
+      <span class="orb orb--1" aria-hidden="true"></span>
+      <span class="orb orb--2" aria-hidden="true"></span>
+
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="kicker">BSIT Team — Information Technology collective</p>
+          <h1 class="hero__title">
+            <span class="line--sm">We build</span>
+            <span class="line--outline">Systems</span>
+            <span class="line--grad">that scale.</span>
+          </h1>
+          <p class="hero__tag">Four Information Technology students turning coursework into shipped software — interfaces, APIs and the data pipelines underneath them.</p>
+          <div class="hero__cta">
+            <a class="btn btn--fill" href="#projects">View our work</a>
+            <a class="btn btn--draw" href="#contact">Start a project</a>
+          </div>
+          <ul class="hero__meta">
+            <li class="meta-item">University of Eastern Pangasinan</li>
+            <li class="meta-item">BS Information Technology</li>
+            <li class="meta-item">Pangasinan, Philippines</li>
+            <li class="meta-item">2026 — present</li>
+          </ul>
+        </div>
+
+        <aside class="terminal glass" aria-hidden="true">
+          <div class="terminal__bar">
+            <span class="dot dot--live"></span><span class="dot"></span><span class="dot"></span>
+            <span class="terminal__label">team.profile</span>
+          </div>
+          <div class="terminal__body">
+            <span class="code-line"><span class="code-str">// build log</span></span>
+            <span class="code-line"><span class="code-key">team:</span> BSIT Team · 4 members</span>
+            <span class="code-line"><span class="code-key">stack:</span> web · data · security</span>
+            <span class="code-line"><span class="code-key">focus:</span> ship real software</span>
+            <span class="code-line"><span class="code-key">status:</span> open for projects</span>
+            <span class="code-line"><span class="caret" aria-hidden="true"></span></span>
+          </div>
+        </aside>
+      </div>
+      <div class="strip wrap">
+        <div class="strip__head">
+          <h2 class="strip__title">Meet the team</h2>
+          <span class="kicker">Four members · one studio</span>
+        </div>
+        <div class="strip__grid">
+          <article class="member">
+            <a class="member__frame" href="#profile-1" aria-label="View Florentino B. Ladia III portfolio">
+              <span class="member__slot">01</span>
+              <span class="inline-block relative member__photo" style="aspect-ratio:1200 / 1600">
+                <span class="block relative w-full h-full overflow-hidden">
+                  <img class="w-full h-full inset-0 absolute object-cover" loading="lazy"
+                       src="ladia.jpg" alt="Portrait of Florentino B. Ladia III">
+                </span>
+              </span>
+              <span class="member__cta">View portfolio ↗</span>
+            </a>
+            <div class="member__meta">
+              <span class="member__tag">Full-Stack</span>
+              <h3 class="member__name"><a href="#profile-1">Florentino B. Ladia III</a></h3>
+              <p class="member__role">Information Technology Student</p>
+              <p class="member__bio">Java and C++ programmer with a frontend and backend focus. STEM graduate with high honors.</p>
+            </div>
+          </article>
+          <article class="member">
+            <a class="member__frame" href="#profile-2" aria-label="View Dan Klieven M. Mengrajal portfolio">
+              <span class="member__slot">02</span>
+              <span class="inline-block relative member__photo" style="aspect-ratio:1200 / 1600">
+                <span class="block relative w-full h-full overflow-hidden">
+                  <img class="w-full h-full inset-0 absolute object-cover" loading="lazy"
+                       src="dan.jpg" alt="Portrait of Dan Klieven M. Mengrajal">
+                </span>
+              </span>
+              <span class="member__cta">View portfolio ↗</span>
+            </a>
+            <div class="member__meta">
+              <span class="member__tag">Hardware &amp; Media</span>
+              <h3 class="member__name"><a href="#profile-2">Dan Klieven M. Mengrajal</a></h3>
+              <p class="member__role">Information Technology Student</p>
+              <p class="member__bio">Hardware troubleshooter and basic video editor who enjoys fixing simple computer problems.</p>
+            </div>
+          </article>
+          <article class="member">
+            <a class="member__frame" href="#profile-3" aria-label="View Godviel P. Soliven portfolio">
+              <span class="member__slot">03</span>
+              <span class="inline-block relative member__photo" style="aspect-ratio:1200 / 1600">
+                <span class="block relative w-full h-full overflow-hidden">
+                  <img class="w-full h-full inset-0 absolute object-cover" loading="lazy"
+                       src="gyatbel.png" alt="Portrait of Godviel P. Soliven">
+                </span>
+              </span>
+              <span class="member__cta">View portfolio ↗</span>
+            </a>
+            <div class="member__meta">
+              <span class="member__tag">Front-End &amp; UI/UX</span>
+              <h3 class="member__name"><a href="#profile-3">Godviel P. Soliven</a></h3>
+              <p class="member__role">Information Technology Student</p>
+              <p class="member__bio">Front-end design, UI/UX and clean code, building intuitive web experiences.</p>
+            </div>
+          </article>
+          <article class="member">
+            <a class="member__frame" href="#profile-4" aria-label="View Rochelle Tugade portfolio">
+              <span class="member__slot">04</span>
+              <span class="inline-block relative member__photo" style="aspect-ratio:1200 / 1600">
+                <span class="block relative w-full h-full overflow-hidden">
+                  <img class="w-full h-full inset-0 absolute object-cover" loading="lazy"
+                       src="rusi.png" alt="Portrait of Rochelle Tugade">
+                </span>
+              </span>
+              <span class="member__cta">View portfolio ↗</span>
+            </a>
+            <div class="member__meta">
+              <span class="member__tag">Web &amp; Design</span>
+              <h3 class="member__name"><a href="#profile-4">Rochelle Tugade</a></h3>
+              <p class="member__role">Information Technology Student</p>
+              <p class="member__bio">Web development and design, with a love for tutoring and organizing campus events.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="section about" id="about">
+      <span class="about__num" aria-hidden="true">02</span>
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">02 — About us</p>
+          <h2 class="section-title">Four laptops, <em>one</em> deadline.</h2>
+        </div>
+
+        <div class="about__grid">
+          <div class="about__story">
+            <p class="lede">We started as classmates who kept getting stuck on the same group projects — and kept fixing them together. Somewhere between late-night debugging sessions and defence rehearsals, that turned into a working studio.</p>
+            <p>Today we split the work the way real teams do: one of us owns the schema, one owns the interface, one owns the data, and one tries to break all of it before anyone else can. We review each other's code, pair on the hard parts, and document everything so the next semester's team can pick up where we stopped.</p>
+            <p><strong>Our mission:</strong> finish each term with something that actually runs — deployed, tested, and useful to someone outside the classroom.</p>
+          </div>
+
+          <aside class="about__aside glass">
+            <h3 class="aside__title"><span aria-hidden="true">▚</span> The file</h3>
+            <dl class="fact-list">
+              <div class="fact"><dt class="fact__label">School</dt><dd class="fact__value">University of Eastern Pangasinan</dd></div>
+              <div class="fact"><dt class="fact__label">Course</dt><dd class="fact__value">BS Information Technology</dd></div>
+              <div class="fact"><dt class="fact__label">Location</dt><dd class="fact__value">Pangasinan, Philippines</dd></div>
+              <div class="fact"><dt class="fact__label">Together since</dt><dd class="fact__value">2026</dd></div>
+            </dl>
+          </aside>
+
+          <div class="stats">
+            <div class="stat">
+              <p class="stat__value">
+                <span class="stat__num" style="--to:4">
+                  <span class="stat__static" aria-hidden="true">4</span>
+                  <span class="sr-only">4</span>
+                </span>
+              </p>
+              <p class="stat__label">Members</p>
+            </div>
+            <div class="stat">
+              <p class="stat__value">
+                <span class="stat__num" style="--to:18">
+                  <span class="stat__static" aria-hidden="true">18</span>
+                  <span class="sr-only">18</span>
+                </span>
+              </p>
+              <p class="stat__label">Projects shipped</p>
+            </div>
+            <div class="stat">
+              <p class="stat__value">
+                <span class="stat__num" style="--to:12">
+                  <span class="stat__static" aria-hidden="true">12</span>
+                  <span class="sr-only">12</span>
+                </span>
+                <span class="stat__suffix" aria-hidden="true">+</span>
+              </p>
+              <p class="stat__label">Tools mastered</p>
+            </div>
+            <div class="stat">
+              <p class="stat__value">
+                <span class="stat__num" style="--to:3">
+                  <span class="stat__static" aria-hidden="true">3</span>
+                  <span class="sr-only">3</span>
+                </span>
+              </p>
+              <p class="stat__label">Hackathons</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span class="marquee__item">JavaScript</span>
+        <span class="marquee__item">Python</span>
+        <span class="marquee__item">React</span>
+        <span class="marquee__item">Node.js</span>
+        <span class="marquee__item">PostgreSQL</span>
+        <span class="marquee__item">Docker</span>
+        <span class="marquee__item">Figma</span>
+        <span class="marquee__item">Linux</span>
+        <span class="marquee__item">Networking</span>
+        <span class="marquee__item">Java</span>
+        <span class="marquee__item">JavaScript</span>
+        <span class="marquee__item">Python</span>
+        <span class="marquee__item">React</span>
+        <span class="marquee__item">Node.js</span>
+        <span class="marquee__item">PostgreSQL</span>
+        <span class="marquee__item">Docker</span>
+        <span class="marquee__item">Figma</span>
+        <span class="marquee__item">Linux</span>
+        <span class="marquee__item">Networking</span>
+        <span class="marquee__item">Java</span>
+      </div>
+    </div>
+    <section class="section skills" id="skills">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">03 — Skills</p>
+          <h2 class="section-title">What we <em>actually</em> do.</h2>
+        </div>
+
+        <div class="skills__tabs" role="radiogroup" aria-label="Skills by member">
+          <input class="tab-radio" type="radio" id="skill-tab-1" name="skill-tab" checked>
+          <label class="tab" for="skill-tab-1"><span class="tab__num" aria-hidden="true">01</span>Backend</label>
+          <input class="tab-radio" type="radio" id="skill-tab-2" name="skill-tab">
+          <label class="tab" for="skill-tab-2"><span class="tab__num" aria-hidden="true">02</span>Frontend</label>
+          <input class="tab-radio" type="radio" id="skill-tab-3" name="skill-tab">
+          <label class="tab" for="skill-tab-3"><span class="tab__num" aria-hidden="true">03</span>Data</label>
+          <input class="tab-radio" type="radio" id="skill-tab-4" name="skill-tab">
+          <label class="tab" for="skill-tab-4"><span class="tab__num" aria-hidden="true">04</span>Security</label>
+        </div>
+
+        <div class="skills__panels">
+          <div class="skill-panel skill-panel--1">
+            <div class="bar" style="--v:88">
+              <div class="bar__head">
+                <span class="bar__name">Node &amp; Express</span>
+                <span class="bar__val">88%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:82">
+              <div class="bar__head">
+                <span class="bar__name">Python</span>
+                <span class="bar__val">82%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:79">
+              <div class="bar__head">
+                <span class="bar__name">SQL / PostgreSQL</span>
+                <span class="bar__val">79%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:85">
+              <div class="bar__head">
+                <span class="bar__name">REST API design</span>
+                <span class="bar__val">85%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:64">
+              <div class="bar__head">
+                <span class="bar__name">Docker basics</span>
+                <span class="bar__val">64%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+          </div>
+          <div class="skill-panel skill-panel--2">
+            <div class="bar" style="--v:94">
+              <div class="bar__head">
+                <span class="bar__name">HTML &amp; CSS</span>
+                <span class="bar__val">94%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:87">
+              <div class="bar__head">
+                <span class="bar__name">JavaScript</span>
+                <span class="bar__val">87%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:80">
+              <div class="bar__head">
+                <span class="bar__name">React</span>
+                <span class="bar__val">80%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:91">
+              <div class="bar__head">
+                <span class="bar__name">Responsive design</span>
+                <span class="bar__val">91%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:76">
+              <div class="bar__head">
+                <span class="bar__name">Figma &amp; prototyping</span>
+                <span class="bar__val">76%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+          </div>
+          <div class="skill-panel skill-panel--3">
+            <div class="bar" style="--v:83">
+              <div class="bar__head">
+                <span class="bar__name">Data modelling</span>
+                <span class="bar__val">83%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:78">
+              <div class="bar__head">
+                <span class="bar__name">Pandas &amp; NumPy</span>
+                <span class="bar__val">78%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:74">
+              <div class="bar__head">
+                <span class="bar__name">Visualisation</span>
+                <span class="bar__val">74%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:90">
+              <div class="bar__head">
+                <span class="bar__name">Excel / Sheets</span>
+                <span class="bar__val">90%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:70">
+              <div class="bar__head">
+                <span class="bar__name">Statistics</span>
+                <span class="bar__val">70%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+          </div>
+          <div class="skill-panel skill-panel--4">
+            <div class="bar" style="--v:81">
+              <div class="bar__head">
+                <span class="bar__name">Networking</span>
+                <span class="bar__val">81%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:77">
+              <div class="bar__head">
+                <span class="bar__name">Linux administration</span>
+                <span class="bar__val">77%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:68">
+              <div class="bar__head">
+                <span class="bar__name">Penetration testing</span>
+                <span class="bar__val">68%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:72">
+              <div class="bar__head">
+                <span class="bar__name">Cryptography basics</span>
+                <span class="bar__val">72%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+            <div class="bar" style="--v:86">
+              <div class="bar__head">
+                <span class="bar__name">Technical writing</span>
+                <span class="bar__val">86%</span>
+              </div>
+              <span class="bar__track"><span class="bar__fill"></span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rings">
+          <div class="ring">
+            <span class="ring__dial" aria-hidden="true" style="--p:88"></span>
+            <span class="ring__value" aria-hidden="true">88%</span>
+            <span class="ring__label">Team avg. delivery</span>
+          </div>
+          <div class="ring">
+            <span class="ring__dial" aria-hidden="true" style="--p:76"></span>
+            <span class="ring__value" aria-hidden="true">76%</span>
+            <span class="ring__label">Test coverage</span>
+          </div>
+          <div class="ring">
+            <span class="ring__dial" aria-hidden="true" style="--p:94"></span>
+            <span class="ring__value" aria-hidden="true">94%</span>
+            <span class="ring__label">On-time defence</span>
+          </div>
+        </div>
+
+        <div class="hexes">
+          <span class="hex">Git</span>
+          <span class="hex">Figma</span>
+          <span class="hex">Postman</span>
+          <span class="hex">VSCode</span>
+          <span class="hex">MySQL</span>
+          <span class="hex">Wireshark</span>
+        </div>
+      </div>
+    </section>
+    <section class="section projects" id="projects">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">04 — Projects</p>
+          <h2 class="section-title">Things we <em>shipped</em>.</h2>
+          <p class="lede">Six builds from the last three semesters. Open any card to read the short case study.</p>
+        </div>
+        <div class="projects__grid">
+          <article class="project project--1" id="project-1">
+            <div class="project__art" aria-hidden="true">
+              <span class="project__index">// 01</span>
+              <div class="project__overlay">
+                <h3 class="project__title">Campus Queue</h3>
+                <p class="project__desc">A virtual line for student services so nobody waits outside the registrar.</p>
+              </div>
+            </div>
+            <div class="project__body">
+              <ul class="tags">
+                <li class="tag">React</li>
+                <li class="tag">Node</li>
+                <li class="tag">PostgreSQL</li>
+              </ul>
+              <div class="project__actions">
+                <a class="btn btn--fill" href="#project-1">View project</a>
+              </div>
+            </div>
+            <div class="project__detail">
+              <dl class="detail__meta">
+                <dt>Role</dt><dd>Full build — schema, API, front end</dd>
+                <dt>Timeline</dt><dd>Semester 1 · 6 weeks</dd>
+                <dt>Outcome</dt><dd>Served 400+ tickets in its first pilot week.</dd>
+              </dl>
+              <a class="link detail__close" href="#projects">Close case study</a>
+            </div>
+          </article>
+          <article class="project project--2" id="project-2">
+            <div class="project__art" aria-hidden="true">
+              <span class="project__index">// 02</span>
+              <div class="project__overlay">
+                <h3 class="project__title">Inventory Suite</h3>
+                <p class="project__desc">Point-of-sale and stock tracking for a small campus canteen.</p>
+              </div>
+            </div>
+            <div class="project__body">
+              <ul class="tags">
+                <li class="tag">Java</li>
+                <li class="tag">MySQL</li>
+                <li class="tag">JavaFX</li>
+              </ul>
+              <div class="project__actions">
+                <a class="btn btn--fill" href="#project-2">View project</a>
+              </div>
+            </div>
+            <div class="project__detail">
+              <dl class="detail__meta">
+                <dt>Role</dt><dd>Backend and reporting</dd>
+                <dt>Timeline</dt><dd>Semester 2 · 8 weeks</dd>
+                <dt>Outcome</dt><dd>Cut manual stock recounts to one a month.</dd>
+              </dl>
+              <a class="link detail__close" href="#projects">Close case study</a>
+            </div>
+          </article>
+          <article class="project project--3" id="project-3">
+            <div class="project__art" aria-hidden="true">
+              <span class="project__index">// 03</span>
+              <div class="project__overlay">
+                <h3 class="project__title">Records Portal</h3>
+                <p class="project__desc">Role-based student records with audit logging and printable transcripts.</p>
+              </div>
+            </div>
+            <div class="project__body">
+              <ul class="tags">
+                <li class="tag">Python</li>
+                <li class="tag">Flask</li>
+                <li class="tag">SQLite</li>
+              </ul>
+              <div class="project__actions">
+                <a class="btn btn--fill" href="#project-3">View project</a>
+              </div>
+            </div>
+            <div class="project__detail">
+              <dl class="detail__meta">
+                <dt>Role</dt><dd>Authentication and audit trail</dd>
+                <dt>Timeline</dt><dd>Semester 2 · 5 weeks</dd>
+                <dt>Outcome</dt><dd>Every record change is now traceable to an account.</dd>
+              </dl>
+              <a class="link detail__close" href="#projects">Close case study</a>
+            </div>
+          </article>
+          <article class="project project--4" id="project-4">
+            <div class="project__art" aria-hidden="true">
+              <span class="project__index">// 04</span>
+              <div class="project__overlay">
+                <h3 class="project__title">Network Monitor</h3>
+                <p class="project__desc">Live dashboard that flags dropped hosts and graphs uptime across a lab.</p>
+              </div>
+            </div>
+            <div class="project__body">
+              <ul class="tags">
+                <li class="tag">Python</li>
+                <li class="tag">WebSockets</li>
+                <li class="tag">Chart.js</li>
+              </ul>
+              <div class="project__actions">
+                <a class="btn btn--fill" href="#project-4">View project</a>
+              </div>
+            </div>
+            <div class="project__detail">
+              <dl class="detail__meta">
+                <dt>Role</dt><dd>Probing service and dashboard</dd>
+                <dt>Timeline</dt><dd>Semester 3 · 4 weeks</dd>
+                <dt>Outcome</dt><dd>Downtime spotted in minutes instead of days.</dd>
+              </dl>
+              <a class="link detail__close" href="#projects">Close case study</a>
+            </div>
+          </article>
+          <article class="project project--5" id="project-5">
+            <div class="project__art" aria-hidden="true">
+              <span class="project__index">// 05</span>
+              <div class="project__overlay">
+                <h3 class="project__title">Attendance QR</h3>
+                <p class="project__desc">One-scan class attendance with geo-checks and a weekly summary export.</p>
+              </div>
+            </div>
+            <div class="project__body">
+              <ul class="tags">
+                <li class="tag">JavaScript</li>
+                <li class="tag">Express</li>
+                <li class="tag">MongoDB</li>
+              </ul>
+              <div class="project__actions">
+                <a class="btn btn--fill" href="#project-5">View project</a>
+              </div>
+            </div>
+            <div class="project__detail">
+              <dl class="detail__meta">
+                <dt>Role</dt><dd>Scan flow and export pipeline</dd>
+                <dt>Timeline</dt><dd>Semester 3 · 6 weeks</dd>
+                <dt>Outcome</dt><dd>Roll call dropped from 5 minutes to 30 seconds.</dd>
+              </dl>
+              <a class="link detail__close" href="#projects">Close case study</a>
+            </div>
+          </article>
+          <article class="project project--6" id="project-6">
+            <div class="project__art" aria-hidden="true">
+              <span class="project__index">// 06</span>
+              <div class="project__overlay">
+                <h3 class="project__title">Threat Lab</h3>
+                <p class="project__desc">An isolated network we break on purpose to practise detection and hardening.</p>
+              </div>
+            </div>
+            <div class="project__body">
+              <ul class="tags">
+                <li class="tag">Kali</li>
+                <li class="tag">Docker</li>
+                <li class="tag">Wireshark</li>
+              </ul>
+              <div class="project__actions">
+                <a class="btn btn--fill" href="#project-6">View project</a>
+              </div>
+            </div>
+            <div class="project__detail">
+              <dl class="detail__meta">
+                <dt>Role</dt><dd>Lab design and write-ups</dd>
+                <dt>Timeline</dt><dd>Semester 3 · 3 weeks</dd>
+                <dt>Outcome</dt><dd>Documented 14 attack paths and their fixes.</dd>
+              </dl>
+              <a class="link detail__close" href="#projects">Close case study</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+    <section class="section services" id="services">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">05 — Services</p>
+          <h2 class="section-title">What we can <em>do for you</em>.</h2>
+        </div>
+        <div class="services__grid">
+          <div class="service" tabindex="0">
+            <div class="service__inner">
+              <div class="service__face service__face--front">
+                <span class="service__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M8 6 3 12l5 6M16 6l5 6-5 6M13 4l-2 16"></path>
+                  </svg>
+                </span>
+                <h3 class="service__title">Web Development</h3>
+                <p class="service__text">Full-stack builds that hold up under a real demo — not just a local server.</p>
+                <p class="service__spacer"></p>
+                <span class="link" aria-hidden="true">What's included →</span>
+              </div>
+              <div class="service__face service__face--back">
+                <ul class="service__list">
+                  <li>Database design</li>
+                  <li>REST APIs</li>
+                  <li>Deployment &amp; hosting</li>
+                  <li>Handover docs</li>
+                </ul>
+                <p class="service__spacer"></p>
+                <a class="btn btn--draw" href="#contact">Ask about this</a>
+              </div>
+            </div>
+          </div>
+          <div class="service" tabindex="0">
+            <div class="service__inner">
+              <div class="service__face service__face--front">
+                <span class="service__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3 3 7.5 12 12l9-4.5L12 3Zm-9 9 9 4.5 9-4.5M3 16.5 12 21l9-4.5"></path>
+                  </svg>
+                </span>
+                <h3 class="service__title">UI &amp; Front-End</h3>
+                <p class="service__text">Interfaces designed in the browser: responsive, accessible, quick to load.</p>
+                <p class="service__spacer"></p>
+                <span class="link" aria-hidden="true">What's included →</span>
+              </div>
+              <div class="service__face service__face--back">
+                <ul class="service__list">
+                  <li>Responsive layouts</li>
+                  <li>Design systems</li>
+                  <li>Motion &amp; micro-states</li>
+                  <li>Accessibility pass</li>
+                </ul>
+                <p class="service__spacer"></p>
+                <a class="btn btn--draw" href="#contact">Ask about this</a>
+              </div>
+            </div>
+          </div>
+          <div class="service" tabindex="0">
+            <div class="service__inner">
+              <div class="service__face service__face--front">
+                <span class="service__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"></path>
+                  </svg>
+                </span>
+                <h3 class="service__title">Data &amp; Reporting</h3>
+                <p class="service__text">Turning scattered records into dashboards your adviser can actually read.</p>
+                <p class="service__spacer"></p>
+                <span class="link" aria-hidden="true">What's included →</span>
+              </div>
+              <div class="service__face service__face--back">
+                <ul class="service__list">
+                  <li>Data cleaning</li>
+                  <li>SQL reporting</li>
+                  <li>Interactive charts</li>
+                  <li>Export to Excel</li>
+                </ul>
+                <p class="service__spacer"></p>
+                <a class="btn btn--draw" href="#contact">Ask about this</a>
+              </div>
+            </div>
+          </div>
+          <div class="service" tabindex="0">
+            <div class="service__inner">
+              <div class="service__face service__face--front">
+                <span class="service__icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 3 5 6v6c0 4 3 7 7 9 4-2 7-5 7-9V6l-7-3Zm-2.5 9.5 2 2 4-4"></path>
+                  </svg>
+                </span>
+                <h3 class="service__title">Security Review</h3>
+                <p class="service__text">We attack what we build, then hand you the list of fixes in plain language.</p>
+                <p class="service__spacer"></p>
+                <span class="link" aria-hidden="true">What's included →</span>
+              </div>
+              <div class="service__face service__face--back">
+                <ul class="service__list">
+                  <li>Network setup</li>
+                  <li>Vulnerability checks</li>
+                  <li>Hardening guide</li>
+                  <li>Incident write-up</li>
+                </ul>
+                <p class="service__spacer"></p>
+                <a class="btn btn--draw" href="#contact">Ask about this</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section contact" id="contact">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">06 — Contact</p>
+          <h2 class="section-title">Let's build <em>something</em>.</h2>
+          <p class="lede">Term project, competition entry or a small site for your org — tell us what you need and we'll reply within a day.</p>
+        </div>
+
+        <div class="contact__grid">
+          <form class="form glass" action="mailto:hello@yourteam.dev" enctype="text/plain" method="post">
+            <div class="field">
+              <input id="name" type="text" placeholder=" " autocomplete="name" name="name">
+              <label for="name">Your name</label>
+            </div>
+            <div class="field">
+              <input id="email" type="email" placeholder=" " autocomplete="email" name="email">
+              <label for="email">Email address</label>
+            </div>
+            <div class="field">
+              <textarea id="message" name="message" placeholder=" "></textarea>
+              <label for="message">What do you need?</label>
+            </div>
+            <div class="form__actions">
+              <button class="btn btn--fill" type="submit">Send message</button>
+              <span class="form__note">Opens in your mail app</span>
+            </div>
+          </form>
+
+          <aside class="contact__aside">
+            <div class="info-list">
+              <div class="info">
+                <span class="info__label">Email</span>
+                <a class="info__value" href="mailto:hello@yourteam.dev">hello@yourteam.dev</a>
+              </div>
+              <div class="info">
+                <span class="info__label">Phone</span>
+                <a class="info__value" href="tel:+0000000000">+00 000 000 0000</a>
+              </div>
+              <div class="info">
+                <span class="info__label">Location</span>
+                <span class="info__value">Pangasinan, Philippines</span>
+              </div>
+            </div>
+            <div>
+              <p class="info__label">Find us online</p>
+              <div class="socials" style="margin-top:0.8rem">
+                <a class="social" href="https://github.com/Thirdeeladia" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a class="social" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">LinkedIn</a>
+                <a class="social" href="https://x.com/" target="_blank" rel="noreferrer">X</a>
+                <a class="social" href="https://dribbble.com/" target="_blank" rel="noreferrer">Dribbble</a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="profile" id="profile-1" aria-label="Florentino B. Ladia III portfolio">
+    <div class="profile__inner">
+      <div class="profile__bar">
+        <a class="link" href="#home">← Back to team</a>
+        <span class="profile__count">PORTFOLIO 01 / 04</span>
+        <a class="profile__close" href="#home" aria-label="Close portfolio">×</a>
+      </div>
+      <div class="profile__head">
+        <div class="profile__photo"><img src="ladia.jpg" alt="Florentino B. Ladia III"></div>
+        <div>
+          <p class="kicker">Information Technology Student</p>
+          <h2 class="profile__name">Florentino B. Ladia III</h2>
+          <p class="profile__bio">Dedicated first-year BSIT student with a strong STEM foundation and hands-on skills in Java, C++, HTML and CSS. Eager to build innovative web applications and contribute to collaborative tech projects.</p>
+          <div class="profile__links">
+            <a class="btn btn--draw" href="mailto:thirdeeladia@gmail.com" target="_blank" rel="noreferrer">Email</a>
+            <a class="btn btn--draw" href="https://github.com/Thirdeeladia" target="_blank" rel="noopener noreferrer">GitHub</a>
+          
+            <button class="btn btn--fill resume-btn" type="button" data-resume="Florentino.jpg" data-preview="Florentino.jpg" data-name="Florentino B. Ladia III" data-download="Florentino-Ladia-Resume.jpg">Download resume</button>
+</div>
+        </div>
+      </div>
+      <div class="profile__grid">
+        <div class="pblock">
+          <h3>Education</h3>
+          <ul class="edu">
+            <li><strong>Bachelor of Science in Information Technology</strong><span>University of Eastern Pangasinan · 2026 — Present</span></li>
+            <li><strong>STEM Strand (With High Honors)</strong><span>Balungao National High School · 2024 — 2026</span></li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <h3>Skills</h3>
+          <ul class="tags">
+            <li class="tag">Java</li>
+            <li class="tag">C++</li>
+            <li class="tag">HTML</li>
+            <li class="tag">CSS</li>
+            <li class="tag">Frontend Development</li>
+            <li class="tag">Backend Development</li>
+          </ul>
+        </div>
+        <div class="pblock pblock--wide">
+          <h3>Projects</h3>
+          <div class="pcards">
+            <div class="pcard"><h4>Student Portfolio &amp; Personal Website</h4><p>A responsive personal portfolio built with HTML and CSS to showcase academic milestones, skills and projects.</p></div>
+            <div class="pcard"><h4>Console-Based Utility Application</h4><p>An object-oriented Java/C++ application focused on data management, logic flow and problem-solving.</p></div>
+          </div>
+        </div>
+        <div class="pblock">
+          <h3>Interests</h3>
+          <ul class="tags">
+            <li class="tag">Full-Stack Web Development</li>
+            <li class="tag">Competitive Programming</li>
+            <li class="tag">UI/UX Design</li>
+            <li class="tag">Open Source</li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <h3>Contact</h3>
+          <p>GitHub: <a class="link" href="https://github.com/Thirdeeladia" target="_blank" rel="noopener noreferrer">github.com/Thirdeeladia</a></p>
+          <p><a class="link" href="mailto:thirdeeladia@gmail.com">thirdeeladia@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="profile__pager"><a href="#profile-4">← Rochelle</a><a href="#profile-2">Dan →</a></div>
+    </div>
+  </div>
+
+  <div class="profile" id="profile-2" aria-label="Dan Klieven M. Mengrajal portfolio">
+    <div class="profile__inner">
+      <div class="profile__bar">
+        <a class="link" href="#home">← Back to team</a>
+        <span class="profile__count">PORTFOLIO 02 / 04</span>
+        <a class="profile__close" href="#home" aria-label="Close portfolio">×</a>
+      </div>
+      <div class="profile__head">
+        <div class="profile__photo"><img src="dan.jpg" alt="Dan Klieven M. Mengrajal"></div>
+        <div>
+          <p class="kicker">Information Technology Student</p>
+          <h2 class="profile__name">Dan Klieven M. Mengrajal</h2>
+          <p class="profile__bio">First-year BSIT student passionate about computer hardware, learning basic programming, hardware troubleshooting and video editing. Enjoys solving simple computer problems and developing new technical skills.</p>
+          <div class="profile__links">
+            <a class="btn btn--draw" href="mailto:Klievenmengrajal@gmail.com" target="_blank" rel="noreferrer">Email</a>
+          
+            <button class="btn btn--fill resume-btn" type="button" data-resume="Klieven.jpg" data-preview="Klieven.jpg" data-name="Dan Klieven M. Mengrajal" data-download="Dan-Mengrajal-Resume.jpg">Download resume</button>
+</div>
+        </div>
+      </div>
+      <div class="profile__grid">
+        <div class="pblock">
+          <h3>Education</h3>
+          <ul class="edu">
+            <li><strong>Bachelor of Science in Information Technology</strong><span>University of Eastern Pangasinan · Present</span></li>
+            <li><strong>Senior High School Graduate — HUMSS Strand</strong><span>Umingan National High School</span></li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <h3>Skills</h3>
+          <ul class="tags">
+            <li class="tag">Basic Video Editing</li>
+            <li class="tag">Computer Hardware Repair</li>
+            <li class="tag">Troubleshooting</li>
+          </ul>
+        </div>
+        <div class="pblock pblock--wide">
+          <h3>Projects &amp; Activities</h3>
+          <div class="pcards">
+            <div class="pcard"><h4>Basic Video Editing</h4><p>Creating and editing videos with text, music, transitions and effects.</p></div>
+            <div class="pcard"><h4>Computer Hardware Troubleshooting</h4><p>Checking cables, RAM and monitor connections to find simple problems.</p></div>
+          </div>
+        </div>
+        <div class="pblock">
+          <h3>Interests</h3>
+          <ul class="tags">
+            <li class="tag">Video Editing</li>
+            <li class="tag">Computer Hardware</li>
+            <li class="tag">Music</li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <h3>Contact</h3>
+          <p>Based in Umingan, Pangasinan. Open to learning opportunities and school projects.</p>
+          <p><a class="link" href="mailto:Klievenmengrajal@gmail.com">Klievenmengrajal@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="profile__pager"><a href="#profile-1">← Florentino</a><a href="#profile-3">Godviel →</a></div>
+    </div>
+  </div>
+
+  <div class="profile" id="profile-3" aria-label="Godviel P. Soliven portfolio">
+    <div class="profile__inner">
+      <div class="profile__bar">
+        <a class="link" href="#home">← Back to team</a>
+        <span class="profile__count">PORTFOLIO 03 / 04</span>
+        <a class="profile__close" href="#home" aria-label="Close portfolio">×</a>
+      </div>
+      <div class="profile__head">
+        <div class="profile__photo"><img src="gyatbel.png" alt="Godviel P. Soliven"></div>
+        <div>
+          <p class="kicker">Information Technology Student</p>
+          <h2 class="profile__name">Godviel P. Soliven</h2>
+          <p class="profile__bio">A driven first-year BSIT student with a passion for front-end design, UI/UX and clean code. Enjoys building intuitive web experiences, solving technical problems and collaborating on tech community initiatives.</p>
+          <div class="profile__links">
+            <a class="btn btn--draw" href="mailto:godviel.soliven.student.2425@access.edu.ph" target="_blank" rel="noreferrer">Email</a>
+          
+            <button class="btn btn--fill resume-btn" type="button" data-resume="Viel.jpg" data-preview="Viel.jpg" data-name="Godviel P. Soliven" data-download="Godviel-Soliven-Resume.jpg">Download resume</button>
+</div>
+        </div>
+      </div>
+      <div class="profile__grid">
+        <div class="pblock">
+          <h3>Education</h3>
+          <ul class="edu">
+            <li><strong>Bachelor of Science in Information Technology</strong><span>University of Eastern Pangasinan · 2026 — Present</span></li>
+            <li><strong>ICT Strand</strong><span>Tayug National High School · 2025 — 2026</span></li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <h3>Skills</h3>
+          <ul class="tags">
+            <li class="tag">Database Basics</li>
+            <li class="tag">IT Operations &amp; Systems</li>
+            <li class="tag">Tools &amp; Software</li>
+            <li class="tag">Coding</li>
+          </ul>
+        </div>
+        <div class="pblock pblock--wide">
+          <h3>Focus Areas</h3>
+          <div class="pcards">
+            <div class="pcard"><h4>Front-End Design</h4><p>Clean, intuitive web interfaces.</p></div>
+            <div class="pcard"><h4>UI Prototyping &amp; Digital Art</h4><p>Designing and prototyping user experiences.</p></div>
+          </div>
+        </div>
+        <div class="pblock">
+          <h3>Interests</h3>
+          <ul class="tags">
+            <li class="tag">Coding</li>
+            <li class="tag">Design</li>
+            <li class="tag">Problem Solving</li>
+            <li class="tag">Music</li>
+            <li class="tag">Digital Art &amp; UI Prototyping</li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <h3>Contact</h3>
+          <p>Based in Sta. Maria, Pangasinan. Socials: @GodvielSoliven</p>
+          <p><a class="link" href="mailto:godviel.soliven.student.2425@access.edu.ph">godviel.soliven.student.2425@access.edu.ph</a></p>
+        </div>
+      </div>
+      <div class="profile__pager"><a href="#profile-2">← Dan</a><a href="#profile-4">Rochelle →</a></div>
+    </div>
+  </div>
+
+  <div class="profile" id="profile-4" aria-label="Rochelle Tugade portfolio">
+    <div class="profile__inner">
+      <div class="profile__bar">
+        <a class="link" href="#home">← Back to team</a>
+        <span class="profile__count">PORTFOLIO 04 / 04</span>
+        <a class="profile__close" href="#home" aria-label="Close portfolio">×</a>
+      </div>
+      <div class="profile__head">
+        <div class="profile__photo"><img src="rusi.png" alt="Rochelle Tugade"></div>
+        <div>
+          <p class="kicker">Information Technology Student</p>
+          <h2 class="profile__name">Rochelle Tugade</h2>
+          <p class="profile__bio">First-year BSIT student passionate about web development and design. Enjoys solving problems, collaborating with others and learning new tools. Volunteers, tutors fellow students and helps organize campus events.</p>
+          <div class="profile__links">
+            <a class="btn btn--draw" href="mailto:chelletugade56@gmail.com" target="_blank" rel="noreferrer">Email</a>
+          
+            <button class="btn btn--fill resume-btn" type="button" data-resume="Rochelle.jpg" data-preview="Rochelle.jpg" data-name="Rochelle Tugade" data-download="Rochelle-Tugade-Resume.jpg">Download resume</button>
+</div>
+        </div>
+      </div>
+      <div class="profile__grid">
+        <div class="pblock">
+          <h3>Education</h3>
+          <ul class="edu">
+            <li><strong>Bachelor of Science in Information Technology</strong><span>University of Eastern Pangasinan · 2026 — Present</span></li>
+            <li><strong>Senior High School — HUMSS Strand</strong><span>Sta Maria East Integrated School · 2025 — 2026</span></li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <h3>Skills</h3>
+          <ul class="tags">
+            <li class="tag">Web Development</li>
+            <li class="tag">Design</li>
+            <li class="tag">Problem Solving</li>
+            <li class="tag">Collaboration</li>
+            <li class="tag">Tutoring</li>
+          </ul>
+        </div>
+        <div class="pblock pblock--wide">
+          <h3>Activities</h3>
+          <div class="pcards">
+            <div class="pcard"><h4>Peer Tutoring</h4><p>Helping fellow students learn and keep up.</p></div>
+            <div class="pcard"><h4>Campus Events &amp; Volunteering</h4><p>Helping organize school events and community activities.</p></div>
+          </div>
+        </div>
+        <div class="pblock">
+          <h3>Interests</h3>
+          <ul class="tags">
+            <li class="tag">Coding</li>
+            <li class="tag">Design</li>
+            <li class="tag">Reading</li>
+            <li class="tag">Music</li>
+          </ul>
+        </div>
+        <div class="pblock">
+          <h3>Contact</h3>
+          <p>Based in Sta Maria, Pangasinan.</p>
+          <p><a class="link" href="mailto:chelletugade56@gmail.com">chelletugade56@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="profile__pager"><a href="#profile-3">← Godviel</a><a href="#profile-1">Florentino →</a></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="wrap footer__inner">
+      <div>
+        <p class="footer__note">Built by Florentino B. Ladia III, Dan Klieven M. Mengrajal, Godviel P. Soliven and Rochelle Tugade — Information Technology students at University of Eastern Pangasinan.</p>
+        <p class="footer__credit">© 2026 BSIT Team · Hand-coded HTML &amp; CSS </p>
+      </div>
+      <a class="totop" href="#home"><span aria-hidden="true">↑</span>Back to top</a>
+    </div>
+  </footer>
+  <div class="snake" aria-hidden="true">
+    <i class="snake__seg" style="--i:0"></i>
+    <i class="snake__seg" style="--i:1"></i>
+    <i class="snake__seg" style="--i:2"></i>
+    <i class="snake__seg" style="--i:3"></i>
+    <i class="snake__seg" style="--i:4"></i>
+    <i class="snake__seg" style="--i:5"></i>
+    <i class="snake__seg" style="--i:6"></i>
+    <i class="snake__seg" style="--i:7"></i>
+    <i class="snake__seg" style="--i:8"></i>
+    <i class="snake__seg" style="--i:9"></i>
+    <i class="snake__seg" style="--i:10"></i>
+    <i class="snake__seg" style="--i:11"></i>
+    <i class="snake__seg" style="--i:12"></i>
+    <i class="snake__seg" style="--i:13"></i>
+    <i class="snake__seg" style="--i:14"></i>
+    <i class="snake__seg" style="--i:15"></i>
+    <i class="snake__seg" style="--i:16"></i>
+    <i class="snake__seg" style="--i:17"></i>
+    <i class="snake__seg" style="--i:18"></i>
+    <i class="snake__seg" style="--i:19"></i>
+    <i class="snake__seg" style="--i:20"></i>
+    <i class="snake__seg" style="--i:21"></i>
+  </div>
+  <div class="scanlines" aria-hidden="true"></div>
+
+
+  <dialog class="resume-modal" id="resume-modal" aria-labelledby="resume-title">
+    <div class="resume-modal__bar">
+      <h2 class="resume-modal__title" id="resume-title">Resume preview</h2>
+      <div class="resume-modal__actions">
+        <a class="btn btn--fill" id="resume-download" href="#" download>Download resume</a>
+        <button class="btn btn--draw" id="resume-close" type="button">Close</button>
+      </div>
+    </div>
+    <div class="resume-modal__frame" id="resume-frame"><img id="resume-img" alt="Resume preview"><p id="resume-err" class="resume-modal__err" hidden></p></div>
+    <p class="resume-modal__fallback">Want it full size? <a class="link" id="resume-open" href="#" target="_blank" rel="noopener">Open it in a new tab</a>.</p>
+  </dialog>
+
+  <script>
+    (function () {
+      var dlg = document.getElementById('resume-modal');
+      if (!dlg) return;
+      var img = document.getElementById('resume-img');
+      var errEl = document.getElementById('resume-err');
+      var title = document.getElementById('resume-title');
+      var dl = document.getElementById('resume-download');
+      var openLink = document.getElementById('resume-open');
+      var lastBtn = null, tries = [], tryIdx = 0, current = null;
+
+      function setFile(file) {
+        current = file;
+        dl.href = file;
+        openLink.href = file;
+      }
+      function loadNext() {
+        if (tryIdx >= tries.length) {
+          img.hidden = true; errEl.hidden = false;
+          errEl.textContent = 'Resume image not found: ' + tries[0] + ' — copy it into the same folder as index.html (file names are case-sensitive).';
+          return;
+        }
+        var f = tries[tryIdx++];
+        setFile(f);
+        img.src = f;
+      }
+      function openResume(btn) {
+        lastBtn = btn;
+        var f = btn.getAttribute('data-resume');
+        var base = f.split('/').pop();
+        tries = [f, base.toLowerCase(), 'resumes/' + base, 'resumes/' + base.toLowerCase()];
+        tries = tries.filter(function (v, i) { return tries.indexOf(v) === i; });
+        tryIdx = 0;
+        title.textContent = btn.getAttribute('data-name') + ' — Resume';
+        dl.setAttribute('download', btn.getAttribute('data-download') || base);
+        errEl.hidden = true; img.hidden = false;
+        img.alt = btn.getAttribute('data-name') + ' resume';
+        img.onerror = loadNext;
+        loadNext();
+        if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+        dl.focus();
+      }
+      function closeResume() {
+        if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open');
+      }
+      // if the image is missing, Download still tries the file; if that fails the browser says so
+      dl.addEventListener('click', function (e) {
+        if (img.hidden) { e.preventDefault(); errEl.hidden = false; }
+      });
+
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest && e.target.closest('.resume-btn');
+        if (btn) { e.preventDefault(); openResume(btn); }
+      });
+      document.getElementById('resume-close').addEventListener('click', closeResume);
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) closeResume(); });
+      dlg.addEventListener('close', function () {
+        img.onerror = null; img.removeAttribute('src');
+        if (lastBtn) lastBtn.focus();
+      });
+    })();
+  </script>
+</body>
+</html>
+Compose
+Write to Godviel Soliven
